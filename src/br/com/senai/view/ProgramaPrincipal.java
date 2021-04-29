@@ -2,6 +2,8 @@ package br.com.senai.view;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import br.com.senai.controller.CarrinhoController;
 import br.com.senai.controller.ProdutoController;
 import br.com.senai.model.CarrinhoCompra;
 import br.com.senai.model.ProdutoModel;
@@ -13,6 +15,7 @@ public class ProgramaPrincipal {
 		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
 		List<CarrinhoCompra> carrinhos = new ArrayList<CarrinhoCompra>();
 		ProdutoController produtoController = new ProdutoController();
+		CarrinhoController carrinhoController = new CarrinhoController();
 		CarrinhoCompra carrinhoCompra = new CarrinhoCompra();
 
 		// Controle do loop de saída
@@ -35,16 +38,19 @@ public class ProgramaPrincipal {
 				produtoController.removerProduto(produtos);
 				break;
 			case 5:
-					carrinhos.add(produtoController.adcionarCarrinho(produtos, carrinhos));
+				carrinhoController.adcionarCarrinho(produtos, carrinhos);
 				break;
 			case 6:
-				produtoController.listarProdutosCarrinho(carrinhos);
+				carrinhoController.listarProdutosCarrinho(carrinhos);
+				break;
+			case 7:
+				carrinhoController.fecharFaturaCarrinho(carrinhos);
 				break;
 			case 9:
-				sair = true;
+				sair = true;				
 				break;
 			default:
-				System.err.println("Opção inválida meu rei!!!");
+				System.err.println("Opção inválida !!!");
 				break;
 			}
 		} while (!sair);

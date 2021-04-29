@@ -22,6 +22,7 @@ public class ProdutoController {
 		System.out.println("4) Remover item");
 		System.out.println("5) Adcionar ao carrinho");
 		System.out.println("6) Listar o carrinho");
+		System.out.println("7) Fechar fatura");
 		System.out.println("9) Sair do sistema");
 		System.out.println("---------------------");
 
@@ -46,7 +47,7 @@ public class ProdutoController {
 		return produtoModel;
 	}
 
-	public List<ProdutoModel> listarProdutos(List<ProdutoModel> produtos) {
+	public static List<ProdutoModel> listarProdutos(List<ProdutoModel> produtos) {
 		System.out.printf("%8s %s \n", "", "---- Produtos Cadastrados ---");
 		System.out.printf("| %2s | %10s | %10s | %4s | %10s |\n", "ID", "Produto", " Preco", "Qtd ", "R$ Total");
 		/*
@@ -78,13 +79,14 @@ public class ProdutoController {
 			return null;
 		}
 		System.out.println(" --- EDITAR DADOS DE PRODUTOS ---");
+		listarProdutos(produtos);
 		System.out.println("Informe o ID do produto: ");
-		idDoProduto = sc.nextInt() - 1;
+		idDoProduto = sc.nextInt();
 		if (idDoProduto > produtos.size()) {
 			System.out.println("Não existe o produto digitado!");
 			return null;
 		}
-		listarProdutos(produtos);
+		idDoProduto --;
 		System.out.println("--- CAMPOS ---" + "\n1) Nome do produto" + "\n2) Preço unítario" + "\n3) Quantidade"
 				+ "\nInforme o campo que deseja editar:");
 		indexDoCampo = sc.nextInt();
@@ -143,33 +145,4 @@ public class ProdutoController {
 		produtos.remove(idDoProduto);
 	}
 
-	public CarrinhoCompra adcionarCarrinho(List<ProdutoModel> produtos, List<CarrinhoCompra> produtosComprados ) {
-		listarProdutos(produtos);
-		System.out.println("Digite o id do Produto que voce deseja adcionar ao carrinho");
-		int idDoProduto = sc.nextInt() - 1;
-		System.out.println("Digite a quantidade a ser adcionada ao carrinho");
-		int quantidadeDoProduto = sc.nextInt();
-		if (quantidadeDoProduto > produtos.get(idDoProduto).getQuantidadeDoProduto()) {
-			System.out.println("Desculpe, mas não temos há quantidade que você deseja");
-			return null;
-		}
-		produtos.get(idDoProduto).setQuantidadeDoProduto(produtos.get(idDoProduto).getQuantidadeDoProduto() - quantidadeDoProduto);
-		produtos.get(idDoProduto).setSaldoEmEstoque(produtos.get(idDoProduto).getQuantidadeDoProduto() * produtos.get(idDoProduto).getPrecoDoProduto());
-		CarrinhoCompra carrinhoCompra = new CarrinhoCompra();
-		carrinhoCompra.setNomeDoProdutoComprado(produtos.get(idDoProduto).getNomeDoProduto());
-		carrinhoCompra.setPrecoDoProdutoComprado(produtos.get(idDoProduto).getPrecoDoProduto());
-		carrinhoCompra.setQuantidadeDoProdutoComprado(quantidadeDoProduto);
-		carrinhoCompra.setPrecoFinalProdutoComprado(quantidadeDoProduto * carrinhoCompra.getPrecoDoProdutoComprado());
-		return carrinhoCompra;
-	}
-	public List<CarrinhoCompra> listarProdutosCarrinho(List<CarrinhoCompra> produtosComprados) {
-		System.out.printf("%8s %s \n", "", "---- Produtos Cadastrados ---");
-		System.out.printf("| %2s | %10s | %10s | %4s | %10s |\n", "ID", "Produto", " Preco", "Qtd ", "R$ Total");
-		for (int i = 0; i < produtosComprados.size(); i++) {
-			System.out.printf("| %2s | %10s | R$%8.2f | %4s | R$%8.2f |\n", i + 1, produtosComprados.get(i).getNomeDoProdutoComprado(),
-					produtosComprados.get(i).getPrecoDoProdutoComprado(), produtosComprados.get(i).getQuantidadeDoProdutoComprado(),
-					produtosComprados.get(i).getPrecoFinalProdutoComprado());
-		}
-		return produtosComprados;
-	}
 }

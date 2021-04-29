@@ -9,16 +9,16 @@ public class CarrinhoCompra {
 
 	// Construtores
 	public CarrinhoCompra() {
-		}
+	}
 
-	public CarrinhoCompra(String nomeDoProdutoComprado, double precoDoProdutoComprado, int quantidadeDoProdutoComprado, 
+	public CarrinhoCompra(String nomeDoProdutoComprado, double precoDoProdutoComprado, int quantidadeDoProdutoComprado,
 			double PrecoFinalProdutoComprado) {
-			super();
-			this.nomeDoProdutoComprado = nomeDoProdutoComprado;
-			this.precoDoProdutoComprado = precoDoProdutoComprado;
-			this.quantidadeDoProdutoComprado = quantidadeDoProdutoComprado;
-			this.PrecoFinalProdutoComprado = PrecoFinalProdutoComprado;
-		}
+		super();
+		this.nomeDoProdutoComprado = nomeDoProdutoComprado;
+		this.precoDoProdutoComprado = precoDoProdutoComprado;
+		this.quantidadeDoProdutoComprado = quantidadeDoProdutoComprado;
+		this.PrecoFinalProdutoComprado = PrecoFinalProdutoComprado;
+	}
 
 	public String getNomeDoProdutoComprado() {
 		return nomeDoProdutoComprado;
@@ -51,6 +51,5 @@ public class CarrinhoCompra {
 	public void setPrecoFinalProdutoComprado(double precoFinalProdutoComprado) {
 		PrecoFinalProdutoComprado = precoFinalProdutoComprado;
 	}
-	
-	
+
 }
