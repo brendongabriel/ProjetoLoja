@@ -1,59 +1,74 @@
 package br.com.senai.view;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import br.com.senai.controller.CarrinhoController;
-import br.com.senai.controller.ProdutoController;
-import br.com.senai.model.CarrinhoCompra;
+import br.com.senai.controller.Controller;
+import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
+import br.com.senai.controller.carrinho.ListaCarrinho;
+import br.com.senai.controller.cliente.AdicionaCliente;
+import br.com.senai.controller.produto.CadastraProduto;
+import br.com.senai.controller.produto.DeletaProduto;
+import br.com.senai.controller.produto.EditaProduto;
+import br.com.senai.controller.produto.ListaProduto;
+import br.com.senai.model.CarrinhoModel;
 import br.com.senai.model.ProdutoModel;
 
 public class ProgramaPrincipal {
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
-		List<CarrinhoCompra> carrinhos = new ArrayList<CarrinhoCompra>();
-		ProdutoController produtoController = new ProdutoController();
-		CarrinhoController carrinhoController = new CarrinhoController();
-		CarrinhoCompra carrinhoCompra = new CarrinhoCompra();
+		List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
 
-		// Controle do loop de saída
+		Controller produtoController = new Controller();
+		ListaCarrinho listaCarrinho = new ListaCarrinho();
+		AdicionaItemNoCarrinho adicionaItemNoCarrinho = new AdicionaItemNoCarrinho();
+		CadastraProduto cadastraProduto = new CadastraProduto();
+		ListaProduto listaProduto = new ListaProduto();
+		EditaProduto editaProduto = new EditaProduto();
+		DeletaProduto deletaProduto = new DeletaProduto();
+		AdicionaCliente adicionaCliente = new AdicionaCliente();
+
 		boolean sair = false;
+		
+		String cliente = adicionaCliente.definirCliente();
 
 		do {
 			produtoController.menu();
-			int opcao = produtoController.opcao();
-			switch (opcao) {
+			int opc = produtoController.opcao();
+
+			switch (opc) {
 			case 1:
-				produtos.add(produtoController.cadastrarProduto());
+				cadastraProduto.cadastrarProduto();
 				break;
 			case 2:
-				produtoController.listarProdutos(produtos);
+				listaProduto.listarProdutos();
 				break;
 			case 3:
-				produtoController.editarProduto(produtos);
+				editaProduto.editarProduto(produtos);
 				break;
 			case 4:
-				produtoController.removerProduto(produtos);
+				deletaProduto.removerProduto();
 				break;
 			case 5:
-				carrinhoController.adcionarCarrinho(produtos, carrinhos);
+				itensNoCarrinho.add(adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos));
 				break;
 			case 6:
-				carrinhoController.listarProdutosCarrinho(carrinhos);
+				listaCarrinho.listarItensNoCarrinho(itensNoCarrinho);
 				break;
 			case 7:
-				carrinhoController.fecharFaturaCarrinho(carrinhos);
+				listaCarrinho.gerarCupom(itensNoCarrinho, cliente);
 				break;
 			case 9:
-				sair = true;				
+				sair = true;
 				break;
+
 			default:
-				System.err.println("Opção inválida !!!");
+				System.out.println("Opção inválida!!!");
 				break;
 			}
 		} while (!sair);
-		System.out.println("Valeu meu rei, tmj");
+
+		System.out.println("Sistema encerrado!!!");
 	}
 }

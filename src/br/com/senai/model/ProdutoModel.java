@@ -5,22 +5,22 @@ public class ProdutoModel {
 	// Atributos
 	private String nomeDoProduto;
 	private double precoDoProduto;
-	private int quantidadeDoProduto;
+	private int quantidadeDeProduto;
 	private double saldoEmEstoque;
 
-	// Construtores
+	// CONSTRUCTORS
 	public ProdutoModel() {
 	}
 
-	public ProdutoModel(String nomeDoProduto, double precoDoProduto, int quantidadeDoProduto, double saldoEmEstoque) {
+	public ProdutoModel(String nomeDoProduto, double precoDoProduto, int quantidadeDeProduto, double saldoEmEstoque) {
 		super();
 		this.nomeDoProduto = nomeDoProduto;
 		this.precoDoProduto = precoDoProduto;
-		this.quantidadeDoProduto = quantidadeDoProduto;
+		this.quantidadeDeProduto = quantidadeDeProduto;
 		this.saldoEmEstoque = saldoEmEstoque;
 	}
 
-	// Metodos
+	// METODOS ACE/MOD
 	public String getNomeDoProduto() {
 		return nomeDoProduto;
 	}
@@ -37,13 +37,12 @@ public class ProdutoModel {
 		this.precoDoProduto = precoDoProduto;
 	}
 
-	public int getQuantidadeDoProduto() {
-		return quantidadeDoProduto;
+	public int getQuantidadeDeProduto() {
+		return quantidadeDeProduto;
 	}
 
-	public void setQuantidadeDoProduto(int quantidadeDoProduto) {
-
-		this.quantidadeDoProduto = quantidadeDoProduto;
+	public void setQuantidadeDeProduto(int quantidadeDeProduto) {
+		this.quantidadeDeProduto = quantidadeDeProduto;
 	}
 
 	public double getSaldoEmEstoque() {
@@ -53,4 +52,5 @@ public class ProdutoModel {
 	public void setSaldoEmEstoque(double saldoEmEstoque) {
 		this.saldoEmEstoque = saldoEmEstoque;
 	}
+
 }
