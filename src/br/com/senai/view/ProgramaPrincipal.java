@@ -2,6 +2,7 @@ package br.com.senai.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.senai.controller.Controller;
 import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
@@ -16,7 +17,7 @@ import br.com.senai.model.ProdutoModel;
 
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
-		
+
 		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
 		List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
 
@@ -28,46 +29,56 @@ public class ProgramaPrincipal {
 		EditaProduto editaProduto = new EditaProduto();
 		DeletaProduto deletaProduto = new DeletaProduto();
 		AdicionaCliente adicionaCliente = new AdicionaCliente();
-
-		boolean sair = false;
+		Scanner entrada = new Scanner(System.in);
 		
-		String cliente = adicionaCliente.definirCliente();
-
+		boolean sair = false;
+		boolean encerrar = false;
 		do {
-			produtoController.menu();
-			int opc = produtoController.opcao();
 
-			switch (opc) {
-			case 1:
-				cadastraProduto.cadastrarProduto();
-				break;
-			case 2:
-				listaProduto.listarProdutos();
-				break;
-			case 3:
-				editaProduto.editarProduto(produtos);
-				break;
-			case 4:
-				deletaProduto.removerProduto();
-				break;
-			case 5:
-				itensNoCarrinho.add(adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos));
-				break;
-			case 6:
-				listaCarrinho.listarItensNoCarrinho(itensNoCarrinho);
-				break;
-			case 7:
-				listaCarrinho.gerarCupom(itensNoCarrinho, cliente);
-				break;
-			case 9:
-				sair = true;
-				break;
+			String cliente = adicionaCliente.definirCliente();
 
-			default:
-				System.out.println("Opção inválida!!!");
-				break;
+			do {
+				produtoController.menu();
+				int opc = produtoController.opcao();
+
+				switch (opc) {
+				case 1:
+					cadastraProduto.cadastrarProduto();
+					break;
+				case 2:
+					listaProduto.listarProdutos();
+					break;
+				case 3:
+					editaProduto.editarProduto(produtos);
+					break;
+				case 4:
+					deletaProduto.removerProduto();
+					break;
+				case 5:
+					adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos, cliente);
+					break;
+				case 6:
+					listaCarrinho.listarItensNoCarrinho(cliente);
+					break;
+				case 7:
+					listaCarrinho.gerarCupom(cliente);
+					break;
+				case 9:
+					sair = true;
+					break;
+
+				default:
+					System.out.println("Opção inválida!!!");
+					break;
+				}
+			} while (!sair);
+			System.out.println("Voce deseja encerrar o programa? sim - 1/ não - 2");
+			int opcao = entrada.nextInt();
+			if (opcao == 1) {
+				encerrar = false;
 			}
-		} while (!sair);
+			sair = false;
+		} while (!encerrar);
 
 		System.out.println("Sistema encerrado!!!");
 	}

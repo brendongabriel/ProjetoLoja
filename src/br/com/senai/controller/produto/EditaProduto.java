@@ -37,7 +37,7 @@ public class EditaProduto {
 		id = entrada.nextInt();
 
 		try {
-			String sql = "SELECT * FROM produto WHERE codigo = ?";
+			String sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 
@@ -87,7 +87,8 @@ public class EditaProduto {
 		produto.setQuantidadeDeProduto(entrada.nextInt());
 		produto.setSaldoEmEstoque(produto.getPrecoDoProduto() * produto.getQuantidadeDeProduto());
 		try {
-			String sql = "UPDATE produto SET quantidadeDeProduto = ?, saldoEmEstoque = ? " + " WHERE codigo = ?";
+			String sql = "UPDATE produto SET quantidadeDeProduto = ?, saldoEmEstoque = ? "
+					+ " WHERE codigoDoProduto = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, produto.getQuantidadeDeProduto());
 			preparedStatement.setDouble(2, produto.getSaldoEmEstoque());
@@ -107,7 +108,7 @@ public class EditaProduto {
 		produto.setSaldoEmEstoque(produto.getPrecoDoProduto() * produto.getQuantidadeDeProduto());
 
 		try {
-			String sql = "UPDATE produto SET precoDoProduto = ?, saldoEmEstoque = ? " + " WHERE codigo = ?";
+			String sql = "UPDATE produto SET precoDoProduto = ?, saldoEmEstoque = ? " + " WHERE codigoDoProduto = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setDouble(1, produto.getPrecoDoProduto());
 			preparedStatement.setDouble(2, produto.getSaldoEmEstoque());
@@ -125,7 +126,7 @@ public class EditaProduto {
 		System.out.print("Informe o novo nome para o produto: ");
 		produto.setNomeDoProduto(entrada.next());
 		try {
-			String sql = "UPDATE produto SET nomeDoProduto = ? WHERE codigo = ?";
+			String sql = "UPDATE produto SET nomeDoProduto = ? WHERE codigoDoProduto = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, produto.getNomeDoProduto());
 			preparedStatement.setInt(2, idDoProduto);
@@ -136,16 +137,5 @@ public class EditaProduto {
 
 		return null;
 	}
-
-	public List<ProdutoModel> atualizarQuantidadeEValorTotal(List<ProdutoModel> produtos, int quantidade,
-			int idDoProduto) {
-		produto = new ProdutoModel();
-		produto.setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto() - quantidade);
-		produto.setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produto.getQuantidadeDeProduto());
-		produto.setNomeDoProduto(produtos.get(idDoProduto).getNomeDoProduto());
-		produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
-		produtos.set(idDoProduto, produto);
-
-		return produtos;
-	}
+	
 }

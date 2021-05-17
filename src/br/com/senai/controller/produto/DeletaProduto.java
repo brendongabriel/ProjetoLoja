@@ -12,19 +12,21 @@ public class DeletaProduto {
 
 	Scanner entrada = new Scanner(System.in);
 	ListaProduto listaProdutos = new ListaProduto();
-	
+
 	public DeletaProduto() {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 
 	public void removerProduto() {
 		PreparedStatement preparedStatement;
-		listaProdutos.listarProdutos();
-		System.out.println("Insira o ID do produto que você deseja excluir");
-		int idProdutoExcluir = entrada.nextInt();
+		if (listaProdutos.listarProdutos() == null) {
+			return;
+		}
 
 		try {
-			String sql2 = "select * from produto where codigo = " + idProdutoExcluir;
+			System.out.println("Insira o ID do produto que você deseja excluir");
+			int idProdutoExcluir = entrada.nextInt();
+			String sql2 = "select * from produto where codigoDoProduto = " + idProdutoExcluir;
 			preparedStatement = connection.prepareStatement(sql2);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (!resultSet.next()) {
@@ -33,7 +35,7 @@ public class DeletaProduto {
 			}
 			resultSet.previous();
 
-			String sql = "delete from produto where codigo = " + idProdutoExcluir;
+			String sql = "delete from produto where codigoDoProduto = " + idProdutoExcluir;
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 			System.out.println("Produto excluido");

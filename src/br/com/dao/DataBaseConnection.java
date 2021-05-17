@@ -14,7 +14,7 @@ public class DataBaseConnection {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/"+
-					"loja?user=root&useSSL=false"
+							"loja?user=root&useSSL=false"
 					);
 			
 		} catch (Exception e) {

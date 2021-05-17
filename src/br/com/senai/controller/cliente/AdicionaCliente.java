@@ -8,7 +8,7 @@ public class AdicionaCliente {
 	
 	public String definirCliente() {
 		System.out.print("Informe o nome do cliente: ");
-		String nome = "brendon";
+		String nome = entrada.next();
 		return nome;
 	}
 }
