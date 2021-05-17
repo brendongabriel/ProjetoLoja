@@ -25,7 +25,7 @@ public class AdicionaItemNoCarrinho {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 
-	public CarrinhoModel cadastrarItemNoCarrinho(List<ProdutoModel> produtos,String cliente) {
+	public CarrinhoModel cadastrarItemNoCarrinho(List<ProdutoModel> produtos, String cliente) {
 		PreparedStatement preparedStatement;
 		carrinhoModel = new CarrinhoModel();
 		int idDoProduto = 0;
@@ -62,17 +62,16 @@ public class AdicionaItemNoCarrinho {
 			String nomeDoProduto = resultSet.getString("nomeDoProduto");
 			double precoDoProduto = resultSet.getDouble("precoDoProduto");
 			double saldoEmEstoque = resultSet.getDouble("precoDoProduto") * quantidadeComprada;
-			
+
 			preparedStatement = connection.prepareStatement(inserir);
 			preparedStatement.setInt(1, idDoProduto);
-			preparedStatement.setString(2,nomeDoProduto );
+			preparedStatement.setString(2, nomeDoProduto);
 			preparedStatement.setDouble(3, precoDoProduto);
 			preparedStatement.setInt(4, quantidadeComprada);
-			preparedStatement.setDouble(5,saldoEmEstoque);
-			preparedStatement.setString(6,cliente);
+			preparedStatement.setDouble(5, saldoEmEstoque);
+			preparedStatement.setString(6, cliente);
 			preparedStatement.execute();
 
-			
 			int newQuantidade = resultSet.getInt("quantidadeDeproduto") - quantidadeComprada;
 			Double precoFim = resultSet.getDouble("precoDoProduto") * newQuantidade;
 
@@ -91,5 +90,5 @@ public class AdicionaItemNoCarrinho {
 
 		return carrinhoModel;
 	}
-	
+
 }
