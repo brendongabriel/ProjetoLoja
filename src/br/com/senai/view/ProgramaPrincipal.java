@@ -30,52 +30,78 @@ public class ProgramaPrincipal {
 		DeletaProduto deletaProduto = new DeletaProduto();
 		AdicionaCliente adicionaCliente = new AdicionaCliente();
 		Scanner entrada = new Scanner(System.in);
-		
+
 		boolean sair = false;
 		boolean encerrar = false;
+
 		do {
 
 			String cliente = adicionaCliente.definirCliente();
 
-			do {
-				produtoController.menu();
-				int opc = produtoController.opcao();
+			if (cliente.equals("Admin")) {
+				do {
+					produtoController.menuGerente();
+					int opc = produtoController.opcao();
 
-				switch (opc) {
-				case 1:
-					cadastraProduto.cadastrarProduto();
-					break;
-				case 2:
-					listaProduto.listarProdutos();
-					break;
-				case 3:
-					editaProduto.editarProduto(produtos);
-					break;
-				case 4:
-					deletaProduto.removerProduto();
-					break;
-				case 5:
-					adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos, cliente);
-					break;
-				case 6:
-					listaCarrinho.listarItensNoCarrinho(cliente);
-					break;
-				case 7:
-					listaCarrinho.gerarCupom(cliente);
-					break;
-				case 9:
-					sair = true;
-					break;
+					switch (opc) {
+					case 1:
+						cadastraProduto.cadastrarProduto();
+						break;
+					case 2:
+						listaProduto.listarProdutos();
+						break;
+					case 3:
+						editaProduto.editarProduto(produtos);
+						break;
+					case 4:
+						deletaProduto.removerProduto();
+						break;
+					case 5:
+						listaCarrinho.listarItensNoCarrinho();
+						break;
+					case 9:
+						sair = true;
+						break;
 
-				default:
-					System.out.println("Opção inválida!!!");
-					break;
-				}
-			} while (!sair);
-			System.out.println("Voce deseja encerrar o programa? sim - 1/ não - 2");
+					default:
+						System.out.println("Opção inválida!!!");
+						break;
+					}
+				} while (!sair);
+				System.out.println("Voce deseja encerrar o programa? sim - 1/ não - 2");
+			} else {
+
+				do {
+					produtoController.menu();
+					int opc = produtoController.opcao();
+
+					switch (opc) {
+					case 1:
+						listaProduto.listarProdutos();
+						break;
+					case 2:
+						adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos, cliente);
+						break;
+					case 3:
+						listaCarrinho.listarItensNoCarrinho(cliente);
+						break;
+					case 4:
+						listaCarrinho.gerarCupom(cliente);
+						break;
+					case 9:
+						sair = true;
+						break;
+
+					default:
+						System.out.println("Opção inválida!!!");
+						break;
+					}
+				} while (!sair);
+				System.out.println("Voce deseja encerrar o programa? sim - 1/ não - 2");
+			}
 			int opcao = entrada.nextInt();
 			if (opcao == 1) {
-				encerrar = false;
+				encerrar = true;
 			}
 			sair = false;
 		} while (!encerrar);

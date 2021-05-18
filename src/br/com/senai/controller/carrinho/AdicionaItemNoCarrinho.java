@@ -58,7 +58,7 @@ public class AdicionaItemNoCarrinho {
 				return null;
 			}
 
-			String inserir = "INSERT INTO carrinho VALUES (?, ?, ?, ?, ?,?)";
+			String inserir = "INSERT INTO carrinho VALUES (null,?, ?, ?, ?, ?,?,0)";
 			String nomeDoProduto = resultSet.getString("nomeDoProduto");
 			double precoDoProduto = resultSet.getDouble("precoDoProduto");
 			double saldoEmEstoque = resultSet.getDouble("precoDoProduto") * quantidadeComprada;
