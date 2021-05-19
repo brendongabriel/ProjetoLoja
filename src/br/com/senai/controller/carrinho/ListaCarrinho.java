@@ -16,7 +16,7 @@ public class ListaCarrinho {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 
-	public void listarItensNoCarrinho(String cliente) {
+	public ResultSet listarItensNoCarrinho(String cliente) {
 
 		PreparedStatement preparedStatement;
 		try {
@@ -26,22 +26,23 @@ public class ListaCarrinho {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			System.out.println("\n----- PRODUTOS ESCOLHIDOS -----\n");
-			System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
+			System.out.printf("| %9s | %2s | %12s | %8s | %4s | %9s |\n","Cod Venda" ,"ID", "Produto", "Preço", "Qtd", "R$ Total");
 
 			if (!resultSet.next()) {
 				System.out.println("Não possui dados escolhido");
-				return;
+				return null;
 			}
 			resultSet.previous();
 			while (resultSet.next()) {
-				System.out.printf("| %2s | %15s | R$%6.2f | %4s | %9.2f |\n", resultSet.getInt("codigoDoProduto"),
+			System.out.printf("| Cod:%5s | %2s | %12s | R$%6.2f | %4s | %9.2f |\n",resultSet.getInt("codigoVenda"), resultSet.getInt("codigoDoProduto"),
 						resultSet.getString("nomeDoProduto"), resultSet.getDouble("precoDoProduto"),
 						resultSet.getInt("quantidadeDeItensNoCarrinho"), resultSet.getDouble("valorTotalPorItem"));
 			}
+			return resultSet;
 
 		} catch (Exception e) {
 			System.out.println("Errorrrrr");
-			return;
+			return null;
 		}
 
 	}

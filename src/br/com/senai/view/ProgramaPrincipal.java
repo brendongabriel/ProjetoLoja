@@ -7,6 +7,7 @@ import java.util.Scanner;
 import br.com.senai.controller.Controller;
 import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
 import br.com.senai.controller.carrinho.ListaCarrinho;
+import br.com.senai.controller.carrinho.RemoverProdutoDoCarinho;
 import br.com.senai.controller.cliente.AdicionaCliente;
 import br.com.senai.controller.produto.CadastraProduto;
 import br.com.senai.controller.produto.DeletaProduto;
@@ -29,6 +30,7 @@ public class ProgramaPrincipal {
 		EditaProduto editaProduto = new EditaProduto();
 		DeletaProduto deletaProduto = new DeletaProduto();
 		AdicionaCliente adicionaCliente = new AdicionaCliente();
+		RemoverProdutoDoCarinho removerDoCarrinho = new RemoverProdutoDoCarinho();
 		Scanner entrada = new Scanner(System.in);
 
 		boolean sair = false;
@@ -87,6 +89,9 @@ public class ProgramaPrincipal {
 						break;
 					case 4:
 						listaCarrinho.gerarCupom(cliente);
+						break;
+					case 5:
+						removerDoCarrinho.RemoverProduto(cliente);
 						break;
 					case 9:
 						sair = true;

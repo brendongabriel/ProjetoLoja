@@ -21,6 +21,7 @@ public class Controller {
 		System.out.println("2) Adicionar ao carrinho");
 		System.out.println("3) Listar itens no carrinho");
 		System.out.println("4) Gerar cupom");
+		System.out.println("5) Remover produto do Carrinho");
 		System.out.println("9) Sair do sistema");
 		System.out.println("--------------------");
 	}
