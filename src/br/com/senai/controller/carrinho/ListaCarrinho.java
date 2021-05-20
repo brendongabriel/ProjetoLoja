@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.dao.DataBaseConnection;
 import br.com.senai.model.CarrinhoModel;
@@ -26,7 +27,8 @@ public class ListaCarrinho {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			System.out.println("\n----- PRODUTOS ESCOLHIDOS -----\n");
-			System.out.printf("| %9s | %2s | %12s | %8s | %4s | %9s |\n","Cod Venda" ,"ID", "Produto", "Preço", "Qtd", "R$ Total");
+			System.out.printf("| %9s | %2s | %12s | %8s | %4s | %9s |\n", "Cod Venda", "ID", "Produto", "Preço", "Qtd",
+					"R$ Total");
 
 			if (!resultSet.next()) {
 				System.out.println("Não possui dados escolhido");
@@ -34,9 +36,10 @@ public class ListaCarrinho {
 			}
 			resultSet.previous();
 			while (resultSet.next()) {
-			System.out.printf("| Cod:%5s | %2s | %12s | R$%6.2f | %4s | %9.2f |\n",resultSet.getInt("codigoVenda"), resultSet.getInt("codigoDoProduto"),
-						resultSet.getString("nomeDoProduto"), resultSet.getDouble("precoDoProduto"),
-						resultSet.getInt("quantidadeDeItensNoCarrinho"), resultSet.getDouble("valorTotalPorItem"));
+				System.out.printf("| Cod:%5s | %2s | %12s | R$%6.2f | %4s | %9.2f |\n", resultSet.getInt("codigoVenda"),
+						resultSet.getInt("codigoDoProduto"), resultSet.getString("nomeDoProduto"),
+						resultSet.getDouble("precoDoProduto"), resultSet.getInt("quantidadeDeItensNoCarrinho"),
+						resultSet.getDouble("valorTotalPorItem"));
 			}
 			return resultSet;
 
@@ -65,10 +68,10 @@ public class ListaCarrinho {
 			}
 			resultSet.previous();
 			while (resultSet.next()) {
-				System.out.printf("| %2s | %15s | R$%6.2f | %4s | %9.2f | %13s |\n", resultSet.getInt("codigoDoProduto"),
-						resultSet.getString("nomeDoProduto"), resultSet.getDouble("precoDoProduto"),
-						resultSet.getInt("quantidadeDeItensNoCarrinho"), resultSet.getDouble("valorTotalPorItem"),
-						resultSet.getString("cliente"));
+				System.out.printf("| %2s | %15s | R$%6.2f | %4s | %9.2f | %13s |\n",
+						resultSet.getInt("codigoDoProduto"), resultSet.getString("nomeDoProduto"),
+						resultSet.getDouble("precoDoProduto"), resultSet.getInt("quantidadeDeItensNoCarrinho"),
+						resultSet.getDouble("valorTotalPorItem"), resultSet.getString("cliente"));
 			}
 
 		} catch (Exception e) {
@@ -79,7 +82,7 @@ public class ListaCarrinho {
 	}
 
 	public void gerarCupom(String cliente) {
-
+		Scanner sc = new Scanner(System.in);
 		PreparedStatement preparedStatement;
 		try {
 			String sql = "select * from carrinho where cliente = ? and estado = 0";
@@ -97,12 +100,16 @@ public class ListaCarrinho {
 				precoFinal += resultSet.getDouble("valorTotalPorItem");
 			}
 			this.listarItensNoCarrinho(cliente);
-			System.out.println("O valor a ser pago é de " + precoFinal);
-			
+			System.out.println("O valor a ser pago é de R$" + precoFinal);
+			System.out.print("Digite 1 para finalizar a compra:");
+			int confirma = sc.nextInt();
+			if (confirma != 1) {
+				return;
+			}
 			String sql2 = "UPDATE carrinho SET estado = 1 WHERE cliente = ?";
 			preparedStatement = connection.prepareStatement(sql2);
 			preparedStatement.setString(1, cliente);
-			Boolean resultSet2 = preparedStatement.execute();
+			preparedStatement.execute();
 			System.out.println("Seu carrinho foi limpo\nObrigado pelas compras");
 
 		} catch (Exception e) {
@@ -110,5 +117,35 @@ public class ListaCarrinho {
 			return;
 		}
 
+	}
+	public ResultSet listaProdutosComprados(String cliente) {
+		PreparedStatement preparedStatement;
+		try {
+			String sql = "select * from carrinho where cliente = ? and estado = 1 order by codigoDoProduto asc ";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, cliente);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			System.out.println("\n----- PRODUTOS ESCOLHIDOS -----\n");
+			System.out.printf("| %9s | %2s | %12s | %8s | %4s | %9s |\n", "Cod Venda", "ID", "Produto", "Preço", "Qtd",
+					"R$ Total");
+
+			if (!resultSet.next()) {
+				System.out.println("Não possui dados escolhido");
+				return null;
+			}
+			resultSet.previous();
+			while (resultSet.next()) {
+				System.out.printf("| Cod:%5s | %2s | %12s | R$%6.2f | %4s | %9.2f |\n", resultSet.getInt("codigoVenda"),
+						resultSet.getInt("codigoDoProduto"), resultSet.getString("nomeDoProduto"),
+						resultSet.getDouble("precoDoProduto"), resultSet.getInt("quantidadeDeItensNoCarrinho"),
+						resultSet.getDouble("valorTotalPorItem"));
+			}
+			return resultSet;
+
+		} catch (Exception e) {
+			System.out.println("Errorrrrr");
+			return null;
+		}
 	}
 }
