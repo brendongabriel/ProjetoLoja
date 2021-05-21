@@ -85,6 +85,7 @@ public class ListaCarrinho {
 		Scanner sc = new Scanner(System.in);
 		PreparedStatement preparedStatement;
 		try {
+			System.out.println("---- NOME DO CLIENTE: "+cliente+" ----");
 			String sql = "select * from carrinho where cliente = ? and estado = 0";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, cliente);
@@ -100,17 +101,17 @@ public class ListaCarrinho {
 				precoFinal += resultSet.getDouble("valorTotalPorItem");
 			}
 			this.listarItensNoCarrinho(cliente);
-			System.out.println("O valor a ser pago é de R$" + precoFinal);
+			System.out.println("--------------- O VALOR A SER PAGO É DE R$" + precoFinal + "---------------");
 			System.out.print("Digite 1 para finalizar a compra:");
 			int confirma = sc.nextInt();
 			if (confirma != 1) {
 				return;
-			}
+			}		
 			String sql2 = "UPDATE carrinho SET estado = 1 WHERE cliente = ?";
 			preparedStatement = connection.prepareStatement(sql2);
 			preparedStatement.setString(1, cliente);
 			preparedStatement.execute();
-			System.out.println("Seu carrinho foi limpo\nObrigado pelas compras");
+			System.out.println("Seu carrinho foi limpo, Obrigado pelas compras");
 
 		} catch (Exception e) {
 			System.out.println("Errorrrrr");
@@ -121,6 +122,7 @@ public class ListaCarrinho {
 	public ResultSet listaProdutosComprados(String cliente) {
 		PreparedStatement preparedStatement;
 		try {
+			System.out.println("---- NOME DO CLIENTE: "+cliente+" ----");
 			String sql = "select * from carrinho where cliente = ? and estado = 1 order by codigoDoProduto asc ";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, cliente);
