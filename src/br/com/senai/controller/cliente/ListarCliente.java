@@ -21,7 +21,7 @@ public class ListarCliente {
 			preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			System.out.println("\n----- PRODUTOS ESCOLHIDOS -----\n");
+			System.out.println("\n-------- CLIENTES CADASTRADOS --------\n");
 			System.out.printf("| %15s | %15s |\n", "Nome", "Senha");
 
 			if (!resultSet.next()) {

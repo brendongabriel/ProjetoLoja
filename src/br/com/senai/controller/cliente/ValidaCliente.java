@@ -17,7 +17,7 @@ public class ValidaCliente {
 	}
 
 	public String validadarCliente() {
-
+		System.out.println("------- MENU LOGIN -------");
 		System.out.print("NOME: ");
 		String nome = entrada.next();
 		System.out.print("SENHA: ");
